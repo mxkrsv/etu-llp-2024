@@ -2,13 +2,15 @@
 #include <windows.h>
 
 int main() {
-	LPPROCESS_INFORMATION process_information = malloc(sizeof(*process_information));
+	LPPROCESS_INFORMATION process_information =
+		malloc(sizeof(*process_information));
 	LPSTARTUPINFOA startup_info = malloc(sizeof(*startup_info));
 
-	ZeroMemory(process_information, sizeof(process_information));
+	ZeroMemory(process_information, sizeof(*process_information));
 
-	if (!CreateProcessA("C:\\Windows\\System32\\notepad.exe", NULL, NULL, NULL, 0, 0, NULL,
-			    NULL, startup_info, process_information)) {
+	if (!CreateProcessA("C:\\Windows\\System32\\notepad.exe", NULL, NULL,
+			    NULL, 0, 0, NULL, NULL, startup_info,
+			    process_information)) {
 		printf("CreateProcessA: error %ld\n", GetLastError());
 		return 1;
 	}
