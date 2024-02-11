@@ -13,7 +13,6 @@
     {
       devShells.${system}.default = pkgs.mkShell {
         shellHook = ''
-          echo hi
           cat >.clangd <<EOF
           CompileFlags:
             Compiler: ${pkgs.buildPackages.gcc.cc}/bin/x86_64-w64-mingw32-gcc
