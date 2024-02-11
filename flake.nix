@@ -1,8 +1,7 @@
 {
-  inputs =
-    {
-      nixpkgs.url = "nixpkgs/nixos-unstable";
-    };
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+  };
 
   outputs = { nixpkgs, ... }:
     let
@@ -12,13 +11,15 @@
       pkgs = nixpkgs.legacyPackages.${system}.pkgsCross.${platform};
     in
     {
-      #nixpkgs.crossSystem = {
-      #  config = "x86_64-windows";
-      #};
-      pkgs.pkgsStatic.callPackage ({ mkShell, bear }: devShells.${system}.default = pkgs.mkShell {
-        depsBuildBuild = with pkgs; [
-          bear
-        ];
+      devShells.${system}.default = pkgs.mkShell {
+        shellHook = ''
+          echo hi
+          cat >.clangd <<EOF
+          CompileFlags:
+            Compiler: ${pkgs.buildPackages.gcc.cc}/bin/x86_64-w64-mingw32-gcc
+            Add: -I${pkgs.buildPackages.gcc.cc}/x86_64-w64-mingw32/sys-include
+          EOF
+        '';
       };
     };
 }
