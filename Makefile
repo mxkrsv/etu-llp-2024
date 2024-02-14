@@ -1,5 +1,5 @@
 CROSS_COMPILE ?= x86_64-w64-mingw32-
-CC ?= gcc
+CC = gcc
 WINE ?= wine64
 WINEDEBUG ?= "fixme-all"
 PROG ?= main
@@ -10,7 +10,7 @@ build: $(PROG).c
 clean:
 	rm -f $(PROG).exe
 
-run: build
+run:
 	WINEDEBUG=$(WINEDEBUG) $(WINE) $(PROG).exe
 
 .PHONY: clean run
