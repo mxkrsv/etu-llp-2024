@@ -1,0 +1,61 @@
+# `ntc_ntb_msi.c`
+
+## Directly related:
+- `struct ntc_ntb_imm` (includes `struct device *dma_dev` (channel device))
+- `ntc_request_dma()`
+- `ntc_req_imm_cb()`
+- `ntc_req_imm()`
+- `ntc_req_signal()`
+- `ntc_init_dma()`
+- `ntc_request_dma()`
+- `ntc_release_dma()`
+- `get_num_dma_chan()`
+
+## Indirectly:
+- `ntc_ntb_probe()` (`ntc_init_dma()`)
+- `ntc_ntb_db_config_and_recv_addr()`
+  (`ntc_request_dma()`, also uses Intel-specific NTB things)
+- `ntb_ntb_link_work()`
+  (`ntc_request_dma()`, `ntc_ntb_db_config_and_recv_addr()`)
+- `ntc_ntb_init_own_mw_coherent()`? (`ntc_ntb_dma_dev()`? macro)
+- `ntc_ntb_deinit_own_coherent()`? (same as above)
+- `ntc_ntb_dev_init()`? (same as above)
+- `ntc_ntb_filter_bus()`
+
+## Not sure:
+- `ntc_ntb_dma_dev()` macro
+
+# `ntc.h`/`ntc.c`
+
+## Directly related:
+- `enum ntc_dma_chan_type`
+- `enum ntc_dma_memcpy_mode`
+- `struct ntc_dev`
+  (because of `struct ntc_dma_chan dma_chan[...]`)
+- `ntc_dma_chan_dev()`
+- `ntc_dma_chan_tx_status()`
+- `ntc_req_submit()`
+- `ntc_dma_flush()`
+  - `ntc_flush_dma_channels()`
+- `ntc_req_memcpy()`
+- `ntc_req_rr()`
+  - `ntc_init_dma_chan()`
+
+## Indirectly:
+- `dma_sync_single_for_device()`
+- `ntc_prepare_to_copy()`
+- `_ntc_request_memcpy()` (`ntc_req_memcpy()`)
+  - `ntc_request_memcpy_with_cb()`
+  - `ntc_request_memcpy()`
+  - `ntc_request_fenced()`
+  - `ntc_request_memcpy_unfenced()`
+  - `ntc_mr_request_memcpy_unfenced()`
+- `ntc_req_imm()`
+  - `ntc_req_imm32()`
+    - `_ntc_request_imm32()`
+      - `ntc_request_imm32()`
+  - `ntc_req_imm64()`
+    - `_ntc_request_imm64()`
+      - `ntc_request_imm64()`
+  - `ntc_mr_request_memcpy_unfenced_imm()`
+- `ntc_req_signal()`
